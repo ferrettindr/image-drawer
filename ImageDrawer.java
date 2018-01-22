@@ -2,37 +2,54 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.io.File;
 import drawer.*;
+import java.util.Arrays;
+import java.lang.StringBuffer;
 import java.awt.image.BufferedImage;
 
 
 public class ImageDrawer {
 
-	public static void main (String[] args) {
+	private static String[][] shapesNsizes = {{"rectangle", "2"}, {"line", "3"}};
 
-		//arguments parsing
-		if (args.length < 3)
-			throw new IllegalArgumentException("Wrong arguments. The first argument should be the image name, the second the number of tries, the third the size of the brush");
+
+	public static void main (String[] args) {
 
 		BufferedImage originalImg = null;
 		try {
 			originalImg = ImageIO.read(new File(args[0]));
 		} catch (IOException e) {
+			System.out.println("Wrong arguments. The first argument should be the image relative path");
 			e.printStackTrace();
 		}
-		
-		int tries = Integer.parseInt(args[1]);
-		int brushSize = Integer.parseInt(args[2]);
-		
 		//create a drawer by passing it a BufferedImage
 		Drawer imgDrawer = new Drawer(originalImg);
 
-		//create a brush and set it as the drawer brush
-		AbstractBrush imgBrush = new SquareBrush(brushSize);
-		imgDrawer.setBrush(imgBrush);
+		int tries;
+		try {
 
+			tries = Integer.parseInt(args[1]);
+			
+			//create a brush and set it as the drawer brush
+			AbstractBrush imgBrush = brushCreator(args[2], Arrays.copyOfRange(args, 3, args.length));
+			imgDrawer.setBrush(imgBrush);
+
+		} catch (Exception e) {
+			StringBuffer sb = new StringBuffer("Wrong arguments.\n");
+			sb.append("The first argument should be the image path.\n");
+			sb.append("The second the number of tries.\n");
+			sb.append("The third the shape of the brush followed by its measurements.\n");
+			sb.append("The available shapes and the number of theirs measurements are:\n");
+
+			for (String[] shape: shapesNsizes)
+				sb.append("Shape: " + shape[0] + " - Measurements#: " + shape[1] + "\n");
+
+			throw new IllegalArgumentException(sb.toString());
+		}
+	
 		//draw the image
 		imgDrawer.tryAndDraw(tries);
-	
+
+
 		//save the file
 		try {
 			String fileName;
@@ -47,4 +64,25 @@ public class ImageDrawer {
 			e.printStackTrace();
 		}
 	}
+
+
+
+	private static AbstractBrush brushCreator(String brushShape, String[] sizes) {
+		
+		AbstractBrush brush;
+
+		switch (brushShape) {
+			case "rectangle":
+				brush = new RectangleBrush(Integer.parseInt(sizes[0]), Integer.parseInt(sizes[1]));
+				break;
+			case "line":
+				brush = new LineBrush(Integer.parseInt(sizes[0]), Integer.parseInt(sizes[1]), Integer.parseInt(sizes[2]));
+				break;
+			default:
+				throw new IllegalArgumentException("Not existing shape");
+		}
+
+		return brush;
+	}
+
 }
