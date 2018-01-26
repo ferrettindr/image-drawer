@@ -29,17 +29,18 @@ public class LineBrush extends AbstractBrush {
 				yAxis = newY - length/2;
 
 			for (int len = 0; len < length && yAxis < (y+length/2); len++) {
-				//use the linear equation   y = mx + constant   to find the other points of the line
-				xAxis = (int)((yAxis - newY)/slope + newX);
+				//use the linear equation   y = mx + constant
+				//using the known point newX and newY and the slope
+				//to find the other points of the line
+				xAxis = (int) Math.round((yAxis - newY)/slope + newX);
 
-				if (yAxis >= image.getHeight() || xAxis < 0 || xAxis >= image.getWidth())
-					break;
+				if (yAxis < image.getHeight() && xAxis > 0 && xAxis < image.getWidth()) {
+					Integer[] coordinates = new Integer[2];
+					coordinates[0] = xAxis;
+					coordinates[1] = yAxis;
+					strokeCoordinates.add(coordinates);
+				}
 
-				Integer[] coordinates = new Integer[2];
-				coordinates[0] = xAxis;
-				coordinates[1] = yAxis;
-				strokeCoordinates.add(coordinates);
-	
 				yAxis++;
 			}
 		}
