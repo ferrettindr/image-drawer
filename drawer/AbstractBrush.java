@@ -2,9 +2,13 @@ package drawer;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.awt.Graphics2D;
+import java.util.List;
+import java.util.ArrayList;
 
 public abstract class AbstractBrush {
+
+	protected List<Integer[]> strokeCoordinates = new ArrayList<Integer[]>();
+	private Color brushColor;
 
 	public double colorDistance(Color c1, Color c2) {
 		double red = c1.getRed()-c2.getRed();
@@ -17,7 +21,35 @@ public abstract class AbstractBrush {
 	}
 
 	//checks if the brush stroke for this try improves the drawn image, returning true if it does
-	protected abstract boolean tryDraw(BufferedImage sourceImg, BufferedImage destImg, int x, int y, Color color); 
+	public boolean tryDraw(BufferedImage sourceImg, BufferedImage destImg, int x, int y, Color newColor) {
 
-	protected abstract void draw(Graphics2D drawer, int x, int y, Color color);
+		computeStrokeCoordinates(sourceImg, x, y);
+		brushColor = newColor;
+		
+		double oldDiff = 0, newDiff = 0;
+
+		for (Integer[] coordinates: strokeCoordinates) {
+			
+				Color oldColor = new Color(sourceImg.getRGB(coordinates[0],coordinates[1] ), true);
+
+				oldDiff += colorDistance(oldColor, new Color(destImg.getRGB(coordinates[0],coordinates[1] ), true));
+				newDiff += colorDistance(oldColor, newColor);
+		}
+
+		return newDiff < oldDiff;
+	}
+
+	public void draw(BufferedImage destImg) {
+		for (Integer[] coordinates: strokeCoordinates)
+			destImg.setRGB(coordinates[0], coordinates[1], brushColor.getRGB());
+	}
+
+	public void computeStrokeCoordinates(BufferedImage image, int x, int y) {
+		strokeCoordinates.clear();
+		addCurrentCoordinates(image, x, y);
+	}
+
+	protected abstract void addCurrentCoordinates(BufferedImage image, int x, int y);
+
 }
+
