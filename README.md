@@ -22,15 +22,15 @@ The included class ImageDrawer.java contains a main method which shows a simple 
 
 Compile it with `javac ImageDrawer.java` and run it with `java ImageDrawer pathToImage numberOfTries brushShape [..shapeMeasurements]`.
 
-For example, running `java ImageDrawer ./woodland.png 10000000 rectangle 10 10` should get you something similar to this:
+For example, running `java ImageDrawer ./knebworth.png 10000000 line 10 2 45` should get you something similar to this:
 
-***Original image***: woodland.png
+***Original image***: knebworth.png
 
-<img src="https://i.imgur.com/YhhLDK2.jpg" width="700">
+<img src="https://i.imgur.com/DKfSf27.jpg" width="700">
 
-***Drawn copy***: woodland_drawn.png
+***Drawn copy***: knebworth_drawn.png
 
-<img src="https://i.imgur.com/83sPhFC.jpg" width="700">
+<img src="https://i.imgur.com/8D1pGy5.png" width="700">
 
 
 ## Structure
