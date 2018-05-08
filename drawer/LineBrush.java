@@ -15,7 +15,7 @@ public class LineBrush extends AbstractBrush {
 	}
 
 
-	protected void addCurrentCoordinates(BufferedImage image, int x, int y) {
+	protected void addNewCoordinates(BufferedImage image, int x, int y) {
 
 		int yLength = (int) (Math.sin(Math.toRadians(orientation)) * length);
 
@@ -28,6 +28,7 @@ public class LineBrush extends AbstractBrush {
 				newY = image.getHeight() - 1;
 
 
+			//(x0,y0) and (x1,y1) are the extremes of the line
 			int x0 = -1, y0 = newY, x1 = -1, y1 = newY;
 
 			if (orientation % 180 > 5) {
@@ -70,7 +71,6 @@ public class LineBrush extends AbstractBrush {
 				}
 			}
 
-		//	System.out.println("x0= " + x0 + ", y0 = " + y0 + " -- x1 = " + x1 + ", y1= " + y1);
 			plotLine(x0, y0, x1, y1);
 		}
 	}

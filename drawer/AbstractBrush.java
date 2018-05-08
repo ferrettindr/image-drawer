@@ -24,7 +24,6 @@ public abstract class AbstractBrush {
 	public boolean tryDraw(BufferedImage sourceImg, BufferedImage destImg, int x, int y, Color newColor) {
 
 		computeStrokeCoordinates(sourceImg, x, y);
-		brushColor = newColor;
 		
 		double oldDiff = 0, newDiff = 0;
 
@@ -39,17 +38,25 @@ public abstract class AbstractBrush {
 		return newDiff < oldDiff;
 	}
 
+	public void setColor(Color newColor) {
+		brushColor = newColor;
+	}
+
 	public void draw(BufferedImage destImg) {
 		for (Integer[] coordinates: strokeCoordinates)
 			destImg.setRGB(coordinates[0], coordinates[1], brushColor.getRGB());
 	}
 
-	public void computeStrokeCoordinates(BufferedImage image, int x, int y) {
-		strokeCoordinates.clear();
-		addCurrentCoordinates(image, x, y);
+	public void draw(BufferedImage destImg, Color color) {
+		setColor(color);
+		draw(destImg);
 	}
 
-	protected abstract void addCurrentCoordinates(BufferedImage image, int x, int y);
+	public void computeStrokeCoordinates(BufferedImage image, int x, int y) {
+		strokeCoordinates.clear();
+		addNewCoordinates(image, x, y);
+	}
+
+	protected abstract void addNewCoordinates(BufferedImage image, int x, int y);
 
 }
-

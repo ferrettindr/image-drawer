@@ -11,7 +11,7 @@ public class RectangleBrush extends AbstractBrush {
 		yside = height;
 	}
 
-	protected void addCurrentCoordinates(BufferedImage image, int x, int y) {
+	protected void addNewCoordinates(BufferedImage image, int x, int y) {
 
 		int width, height;
 		

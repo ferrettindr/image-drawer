@@ -64,7 +64,7 @@ public class Drawer {
 			y = rnd.nextInt(sourceImg.getHeight());
 			x = rnd.nextInt(sourceImg.getWidth());
 			if (brush.tryDraw(sourceImg, destImg, x, y, color))
-				brush.draw(destImg);
+				brush.draw(destImg, color);
 		}
 	}
 
