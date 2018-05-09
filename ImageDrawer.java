@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class ImageDrawer {
 
-	private static String[][] shapesNsizes = {{"rectangle", "2"}, {"line", "3"}, {"circle", "1"}};
+	private static String[][] shapesNsizes = {{"rectangle", "2"}, {"line", "3"}, {"circle", "1"}, {"random", "1"}};
 
 
 	public static void main (String[] args) {
@@ -80,6 +80,9 @@ public class ImageDrawer {
 				break;
 			case "circle":
 				brush = new CircleBrush(Integer.parseInt(sizes[0])); 
+				break;
+			case "random":
+				brush = new RandomBrush(Integer.parseInt(sizes[0])); 
 				break;
 			default:
 				throw new IllegalArgumentException("Not existing shape");
