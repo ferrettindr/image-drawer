@@ -28,11 +28,11 @@ public abstract class AbstractBrush {
 		double oldDiff = 0, newDiff = 0;
 
 		for (Integer[] coordinates: strokeCoordinates) {
-			
-				Color oldColor = new Color(sourceImg.getRGB(coordinates[0],coordinates[1] ), true);
 
-				oldDiff += colorDistance(oldColor, new Color(destImg.getRGB(coordinates[0],coordinates[1] ), true));
-				newDiff += colorDistance(oldColor, newColor);
+			Color oldColor = new Color(sourceImg.getRGB(coordinates[0],coordinates[1] ), true);
+
+			oldDiff += colorDistance(oldColor, new Color(destImg.getRGB(coordinates[0],coordinates[1] ), true));
+			newDiff += colorDistance(oldColor, newColor);
 		}
 
 		return newDiff < oldDiff;
