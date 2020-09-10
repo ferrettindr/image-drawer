@@ -18,7 +18,7 @@ public class ImageDrawer {
 		try {
 			originalImg = ImageIO.read(new File(args[0]));
 		} catch (IOException e) {
-			System.out.println("Wrong arguments. The first argument should be the image relative path");
+			System.out.println("Wrong arguments. The first argument should be the relative path to the image");
 			e.printStackTrace();
 		}
 		//create a drawer by passing it a BufferedImage

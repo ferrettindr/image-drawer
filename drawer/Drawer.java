@@ -20,14 +20,7 @@ public class Drawer {
 
 	public Drawer(BufferedImage source) {
 		sourceImg = source;
-		
-		//get all colors from source image
-		Set<Color> tempColor = new HashSet<Color>(); 
-		for (int x = 0; x < sourceImg.getWidth(); x++)
-			for (int y = 0; y < sourceImg.getHeight(); y++)
-				tempColor.add(new Color(sourceImg.getRGB(x, y), true));
-		colors = tempColor.toArray(new Color[tempColor.size()]);
-	
+
 		destImg = new BufferedImage(sourceImg.getWidth(), sourceImg.getHeight(), BufferedImage.TYPE_INT_ARGB);
 		//new blank image to draw on
 		gdrawer  = destImg.createGraphics();
@@ -44,11 +37,6 @@ public class Drawer {
 		brush = selectedBrush;
 	}
 
-	public Color getRandomColor() {
-		int rnd = new Random().nextInt(colors.length);
-		return colors[rnd];
-	}
-
 	public BufferedImage getDestImage() {
 		return destImg;
 	}
@@ -60,9 +48,9 @@ public class Drawer {
 		Random rnd = new Random();
 		
 		for (int i = 0; i < tries; i++) {
-			color = this.getRandomColor();
 			y = rnd.nextInt(sourceImg.getHeight());
 			x = rnd.nextInt(sourceImg.getWidth());
+			color = new Color(sourceImg.getRGB(x, y), true);
 			if (brush.tryDraw(sourceImg, destImg, x, y, color))
 				brush.draw(destImg, color);
 		}
